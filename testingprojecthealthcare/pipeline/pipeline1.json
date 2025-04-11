@@ -116,7 +116,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"db_name": {
-											"value": "@item().DatabaseName",
+											"value": "@item().hosa_sql_ls",
 											"type": "Expression"
 										},
 										"schema_name": {
