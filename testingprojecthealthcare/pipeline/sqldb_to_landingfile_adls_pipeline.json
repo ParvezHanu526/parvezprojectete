@@ -118,7 +118,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@and(equals(activity('fileExists').output.exists,true),equals(item().is_active,'1'))",
+									"value": "@equals(item().loadtype,'full')",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -202,6 +202,19 @@
 									}
 								]
 							}
+						},
+						{
+							"name": "If Condition2",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "If Condition1",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"userProperties": []
 						}
 					]
 				}
