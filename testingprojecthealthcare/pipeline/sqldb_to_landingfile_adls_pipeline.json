@@ -63,6 +63,7 @@
 						"value": "@activity('lkp_EMR_configs').output.value",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "File_Exists",
