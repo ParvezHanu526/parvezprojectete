@@ -1,0 +1,39 @@
+{
+	"name": "ls_for_lookup_file_adls_to_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Lookup_file_table_mapping.json",
+				"folderPath": "Lookup",
+				"fileSystem": "raw-data-for-sql-database"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Container": {
+					"type": "string"
+				},
+				"FilePath": {
+					"type": "string"
+				},
+				"FileName": {
+					"type": "string"
+				},
+				"DatabaseName": {
+					"type": "string"
+				},
+				"TableName": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
