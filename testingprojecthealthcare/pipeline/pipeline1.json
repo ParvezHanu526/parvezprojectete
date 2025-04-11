@@ -96,15 +96,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"file_name": {
-											"value": "@item().file_name",
+											"value": "@item().FileName",
 											"type": "Expression"
 										},
 										"file_path": {
-											"value": "@item().file_path",
+											"value": "@item().FilePath",
 											"type": "Expression"
 										},
 										"container": {
-											"value": "@item().container",
+											"value": "@item().Container",
 											"type": "Expression"
 										}
 									}
@@ -116,7 +116,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"db_name": {
-											"value": "@item().database",
+											"value": "@item().DatabaseName",
 											"type": "Expression"
 										},
 										"schema_name": {
@@ -124,7 +124,7 @@
 											"type": "Expression"
 										},
 										"table_name": {
-											"value": "@item().tablename",
+											"value": "@item().TableName",
 											"type": "Expression"
 										}
 									}
