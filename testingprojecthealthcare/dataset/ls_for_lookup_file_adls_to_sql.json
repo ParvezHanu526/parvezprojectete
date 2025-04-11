@@ -30,6 +30,9 @@
 				"DatabaseName": {
 					"type": "string"
 				},
+				"SchemaName": {
+					"type": "string"
+				},
 				"TableName": {
 					"type": "string"
 				}
