@@ -100,7 +100,7 @@
 											"type": "Expression"
 										},
 										"file_path": {
-											"value": "@item().FilePath",
+											"value": "@split(item().FilePath, '/')[0]",
 											"type": "Expression"
 										},
 										"container": {
