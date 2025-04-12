@@ -178,7 +178,7 @@
 											"source": {
 												"type": "AzureSqlSource",
 												"sqlReaderQuery": {
-													"value": "@concat(\n    'select *, ''', \n    item().datasource, \n    ''' as datasource from ', \n    item().tablename, \n    ' where ', \n    item().watermark, \n    ' >= ''', \n    string(activity('Fetch_logs').output.firstRow.last_fetched_date), \n    ''''\n)\n",
+													"value": "@concat(\n    'select *, ''',\n    item().datasource,\n    ''' as datasource from ',\n    item().tablename,\n    ' where ',\n    item().watermark,\n    ' >= ''',\n    formatDateTime(activity('Fetch_logs').output.firstRow.last_fetched_date, 'yyyy-MM-dd'),\n    ''''\n)\n",
 													"type": "Expression"
 												},
 												"queryTimeout": "02:00:00",
