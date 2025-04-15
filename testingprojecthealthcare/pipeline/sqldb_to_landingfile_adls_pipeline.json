@@ -64,7 +64,7 @@
 						"value": "@activity('Lkp_EMR_configs').output.value",
 						"type": "Expression"
 					},
-					"isSequential": false,
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "File_Exists",
@@ -149,8 +149,14 @@
 												"referenceName": "AzureDatabricksDeltaLakeDataset",
 												"type": "DatasetReference",
 												"parameters": {
-													"schema_name": "'aa",
-													"table_name": "'a'"
+													"schema_name": {
+														"value": "\"audit\"",
+														"type": "Expression"
+													},
+													"table_name": {
+														"value": "\"load_logs\"",
+														"type": "Expression"
+													}
 												}
 											}
 										}
@@ -178,7 +184,7 @@
 											"source": {
 												"type": "AzureSqlSource",
 												"sqlReaderQuery": {
-													"value": "@concat(\n    'select *, ''', \n    item().datasource, \n    ''' as datasource from ', \n    item().tablename, \n    ' where ', \n    item().watermark, \n    ' >= ''', \n    string(activity('Fetch_logs').output.firstRow.last_fetched_date), \n    ''''\n)\n",
+													"value": "@if(\n  not(empty(item().watermark)),\n  concat(\n    'select *, ''',\n    item().datasource,\n    ''' as datasource from ',\n    item().tablename,\n    ' where ',\n    item().watermark,\n    ' >= ''',\n    formatDateTime(activity('Fetch_logs').output.firstRow.last_fetched_date, 'yyyy-MM-dd'),\n    ''''\n  ),\n  concat(\n    'select *, ''',\n    item().datasource,\n    ''' as datasource from ',\n    item().tablename\n  )\n)\n",
 													"type": "Expression"
 												},
 												"queryTimeout": "02:00:00",
@@ -254,8 +260,8 @@
 										],
 										"policy": {
 											"timeout": "0.12:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
+											"retry": 3,
+											"retryIntervalInSeconds": 15,
 											"secureOutput": false,
 											"secureInput": false
 										},
@@ -272,8 +278,14 @@
 												"referenceName": "AzureDatabricksDeltaLakeDataset",
 												"type": "DatasetReference",
 												"parameters": {
-													"schema_name": "'aa'",
-													"table_name": "'aa'"
+													"schema_name": {
+														"value": "\"audit\"",
+														"type": "Expression"
+													},
+													"table_name": {
+														"value": "\"load_logs\"",
+														"type": "Expression"
+													}
 												}
 											}
 										}
@@ -382,7 +394,7 @@
 											"source": {
 												"type": "AzureDatabricksDeltaLakeSource",
 												"query": {
-													"value": "@concat(\n  'insert into audit.load_logs(data_source, tablename, numberofrowscopied, watermarkcolumnname, loaddate) values (''',\n  item().datasource, ''',''',\n  item().tablename, ''',''',\n  activity('Full_Load_CP').output.rowscopied, ''',''',\n  item().watermark, ''',''',\n  utcNow(), ''')'\n)\n",
+													"value": "@concat(\n  'insert into audit.load_logs(data_source, tablename, numberofrowscopied, watermarkcolumnname, loaddate) values (''',\n  item().datasource, ''',''',\n  item().tablename, ''',''',\n  activity('Full_Load_CP').output.rowsRead, ''',''',\n  item().watermark, ''',''',\n  utcNow(), ''')'\n)\n",
 													"type": "Expression"
 												}
 											},
@@ -390,8 +402,14 @@
 												"referenceName": "AzureDatabricksDeltaLakeDataset",
 												"type": "DatasetReference",
 												"parameters": {
-													"schema_name": "'aa'",
-													"table_name": "'aa'"
+													"schema_name": {
+														"value": "\"audit\"",
+														"type": "Expression"
+													},
+													"table_name": {
+														"value": "\"load_logs\"",
+														"type": "Expression"
+													}
 												}
 											}
 										}
